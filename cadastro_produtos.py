@@ -26,18 +26,32 @@ def cadastrar_produto():
     
     while True:
         try:
-            preco_produto = float(input(Fore.LIGHTMAGENTA_EX + "Digite o preço do produto: " + Style.RESET_ALL))
+            preco_produto = float(input(Fore.LIGHTMAGENTA_EX + "\nDigite o preço do produto: " + Style.RESET_ALL))
             if preco_produto <= 0:
                 print(Fore.LIGHTRED_EX + "Preço inválido" + Style.RESET_ALL)
                 continue
-            else:
-                with open("aluno.txt", "a", encoding="utf-8") as a:
-                    a.write(f"{nome_produto}; {preco_produto}\n")
-                print(Fore.LIGHTGREEN_EX + "\n=-=-=-=-=-=-=-=Produto cadastrado com sucesso=-=-=-=-=-=-=-= " + Style.RESET_ALL)
-                print(Fore.LIGHTGREEN_EX + "Produto:", nome_produto + Style.RESET_ALL)
-                print(Fore.LIGHTGREEN_EX + f"Preço: R$ {preco_produto:.2f}" + Style.RESET_ALL )
-                return
+            else:            
+               break
+           
         except ValueError:
-            print(Fore.LIGHTRED_EX + "Digite apenas números" + Style.RESET_ALL)
-            
+            print(Fore.LIGHTRED_EX + "Preencha esse campo com apenas números" + Style.RESET_ALL)
+    
+    while True:
+        try:
+            quantidade_produto = int(input(Fore.LIGHTMAGENTA_EX + "\nDigite a quantidade do produto: " + Style.RESET_ALL))
+            if quantidade_produto <= 0:
+                print(Fore.LIGHTRED_EX + "Quantidade inválida" + Style.RESET_ALL)
+                continue
+            else:
+                with open("arquivo.txt", "a", encoding="utf-8") as a:
+                    a.write(f"Nome: {nome_produto}; Preço: {preco_produto}; Quantidade: {quantidade_produto};  \n")
+                print(Fore.LIGHTGREEN_EX + "\n=-=-=-=-=-=-=-=Produto cadastrado com sucesso=-=-=-=-=-=-=-= " + Style.RESET_ALL)
+                print(Fore.LIGHTGREEN_EX + f"Produto: {nome_produto}" + Style.RESET_ALL)
+                print(Fore.LIGHTGREEN_EX + f"Preço: R$ {preco_produto:.2f}" + Style.RESET_ALL )
+                print(Fore.LIGHTGREEN_EX + f"Quantidade: {quantidade_produto}" + Style.RESET_ALL )
+                return
+
+        except ValueError:
+             print(Fore.LIGHTRED_EX + "Preencha esse campo com apenas números inteiros " + Style.RESET_ALL)     
+                
 cadastrar_produto()
