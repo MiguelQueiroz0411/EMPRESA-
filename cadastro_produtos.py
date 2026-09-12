@@ -53,5 +53,3 @@ def cadastrar_produto():
 
         except ValueError:
              print(Fore.LIGHTRED_EX + "Preencha esse campo com apenas números inteiros " + Style.RESET_ALL)     
-                
-cadastrar_produto()
