@@ -1,50 +1,61 @@
-from time import sleep
+import os
+from colorama import Fore, Style, init
+init()
 
-print('--' * 30)
-print('BEM VINDO A EMPRESA +')
-print("você está na interface de cadastro, tenha cuidado!")
-print('-=' * 10)
+def validar_nome(nome):
+    if not nome.strip():
+        return False
+    for char in nome:
+        if char.isdigit() or (not char.isalpha() and char != " "):
+            return False
+    return True
 
-opcao = 0
+def validar_telefone(telefone):
+    if not telefone.strip():
+        return False
+    caracteres_permitidos = " ()-+"
+    tem_digito = False
+    
+    for char in telefone:
+        if char.isdigit():
+            tem_digito = True
+        elif char not in caracteres_permitidos:
+            return False
+            
+    return tem_digito
 
-while opcao != 3:
-    print('''[1] Cadastrar cliente
-[2] Cadastrar produto
-[3] Sair''')
+def cadastrar_cliente():
+    # Título em Amarelo
+    print(Fore.YELLOW + "--- CADASTRO DE CLIENTE ---" + Style.RESET_ALL)
+    
+    # Validação para o Nome
+    while True:
+        nome = input(Fore.CYAN + "Digite o nome do cliente: " + Style.RESET_ALL).strip()
+        if validar_nome(nome):
+            break
+        print(Fore.RED + "Erro: Nome inválido (não pode conter números, símbolos ou ficar em branco).\n" + Style.RESET_ALL)
+        
+    # Validação para o E-mail
+    while True:
+        email = input(Fore.CYAN + "Digite o e-mail: " + Style.RESET_ALL).strip()
+        if "@" in email and "." in email:
+            break
+        print(Fore.RED + "Erro: E-mail inválido. Digite um e-mail que contenha '@' e '.'.\n" + Style.RESET_ALL)
+        
+    # Validação para o Telefone
+    while True:
+        telefone = input(Fore.CYAN + "Digite o telefone: " + Style.RESET_ALL).strip()
+        if validar_telefone(telefone):
+            break
+        print(Fore.RED + "Erro: Telefone inválido. Digite apenas números e caracteres válidos (ex: (11) 99999-9999).\n" + Style.RESET_ALL)
 
-    entrada = input('>>>>> selecione uma opção: ').strip()
+    # Salva no arquivo cliente.txt
+    with open("cliente.txt", "a", encoding="utf-8") as a:
+        a.write(f"Nome: {nome}; E-mail: {email}; Telefone: {telefone};\n")
+        
+    # Exibe confirmação na tela em Verde
+    print(Fore.LIGHTGREEN_EX + "\n=-=-=-=-=-=-=-= Cliente cadastrado com sucesso =-=-=-=-=-=-=-=" + Style.RESET_ALL)
+    print(Fore.LIGHTGREEN_EX + f"Nome: {nome}" + Style.RESET_ALL)
+    print(Fore.LIGHTGREEN_EX + f"E-mail: {email}" + Style.RESET_ALL)
+    print(Fore.LIGHTGREEN_EX + f"Telefone: {telefone}" + Style.RESET_ALL)
 
-    # Valida se a entrada contém apenas dígitos
-    if not entrada.isdigit():
-        print('Erro: A entrada contém caracteres inválidos. Digite apenas números (1, 2 ou 3).')
-        print('-=' * 10)
-        sleep(1.5)
-        continue
-
-    opcao = int(entrada)
-
-    if opcao == 1:
-        cadastro_cliente = str(input('Digite o nome do cliente que sera cadastrado: ')).strip()
-        telefone = str(input('Digite o número do cliente que está sendo cadastrado: ')).strip()
-        email = str(input('Insira o email do cliente que está sendo cadastrado: ')).strip()
-
-        with open("clientes.txt", "a", encoding="utf-8") as arquivo_clientes:
-            arquivo_clientes.write(f"Nome: {cadastro_cliente} | Tel: {telefone} | Email: {email}\n")
-        print(f'Cliente {cadastro_cliente} cadastrado com sucesso.')
-
-    elif opcao == 2:
-        cadastro_produto = str(input('Digite o nome do Produto que você quer cadastrar: ')).strip()
-
-        with open("produtos.txt", "a", encoding="utf-8") as arquivo_produtos:
-            arquivo_produtos.write(f"Produto: {cadastro_produto}\n")
-        print('Produto cadastrado com sucesso.')
-
-    elif opcao == 3:    
-        print('FINALIZANDO...')
-    else:
-        print('Opção inválida: Digite apenas os números correspondentes às opções (1, 2 ou 3).')
-
-    print('-=' * 10)
-    sleep(1.5)
-
-print('FIM DO CADASTRO')
