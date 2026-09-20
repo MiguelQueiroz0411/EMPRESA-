@@ -25,35 +25,28 @@ def validar_telefone(telefone):
     return tem_digito
 
 def cadastrar_cliente():
-    # Título em Amarelo
     print(Fore.YELLOW + "--- CADASTRO DE CLIENTE ---" + Style.RESET_ALL)
     
-    # Validação para o Nome
     while True:
         nome = input(Fore.CYAN + "Digite o nome do cliente: " + Style.RESET_ALL).strip()
         if validar_nome(nome):
             break
         print(Fore.RED + "Erro: Nome inválido (não pode conter números, símbolos ou ficar em branco).\n" + Style.RESET_ALL)
         
-    # Validação para o E-mail
     while True:
         email = input(Fore.CYAN + "Digite o e-mail: " + Style.RESET_ALL).strip()
         if "@" in email and "." in email:
             break
         print(Fore.RED + "Erro: E-mail inválido. Digite um e-mail que contenha '@' e '.'.\n" + Style.RESET_ALL)
         
-    # Validação para o Telefone
     while True:
         telefone = input(Fore.CYAN + "Digite o telefone: " + Style.RESET_ALL).strip()
         if validar_telefone(telefone):
             break
         print(Fore.RED + "Erro: Telefone inválido. Digite apenas números e caracteres válidos (ex: (11) 99999-9999).\n" + Style.RESET_ALL)
 
-    # Salva no arquivo cliente.txt
     with open("cliente.txt", "a", encoding="utf-8") as a:
         a.write(f"Nome: {nome}; E-mail: {email}; Telefone: {telefone};\n")
-        
-    # Exibe confirmação na tela em Verde
     print(Fore.LIGHTGREEN_EX + "\n=-=-=-=-=-=-=-= Cliente cadastrado com sucesso =-=-=-=-=-=-=-=" + Style.RESET_ALL)
     print(Fore.LIGHTGREEN_EX + f"Nome: {nome}" + Style.RESET_ALL)
     print(Fore.LIGHTGREEN_EX + f"E-mail: {email}" + Style.RESET_ALL)
